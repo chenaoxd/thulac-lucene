@@ -14,8 +14,8 @@ import org.apache.lucene.util.Version;
 
 public class TokenizerTest {
 	public static void main(String[] args) throws IOException{
-		String string = "今天很荣幸参加肖老师组织的数据结构课程";
 		Analyzer analyzer = new MyAnalyzer();
+		String string = "今天很荣幸参加肖老师组织的数据结构课程";
 		TokenStream ts;
 		try {
 			ts = analyzer.tokenStream("dummy", new StringReader(string));
@@ -23,6 +23,7 @@ public class TokenizerTest {
 			OffsetAttribute offsetAttribute = ts.getAttribute(OffsetAttribute.class);
 			CharTermAttribute termAttribute = ts.getAttribute(CharTermAttribute.class);
 
+            System.out.println(ts.incrementToken());
 			while (ts.incrementToken()) {
 				int startOffset = offsetAttribute.startOffset();
 				int endOffset = offsetAttribute.endOffset();
@@ -35,4 +36,6 @@ public class TokenizerTest {
 			e.printStackTrace();
 		}
 	}
+
+    
 }

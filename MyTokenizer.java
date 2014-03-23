@@ -15,10 +15,10 @@ public class MyTokenizer extends Tokenizer{
 	private final CharTermAttribute termAtt;
 	private final OffsetAttribute offsetAtt;
 	private final TypeAttribute typeAtt;
-	private String content = "";
 	private ArrayList<Term> terms;
 	private int currentTerm;
 	private int length;
+    private int in;
 
 	private static ArrayList<Term> thulacSeg(String content){
 		ArrayList<Term> resultList = new ArrayList<Term>();
@@ -42,10 +42,12 @@ public class MyTokenizer extends Tokenizer{
 	
 	protected MyTokenizer(Reader input) {
 		super(input);
+        System.out.println(terms);
 		offsetAtt = addAttribute(OffsetAttribute.class);
 		typeAtt = addAttribute(TypeAttribute.class);
 		termAtt = addAttribute(CharTermAttribute.class);
-		content = Helper.readerToString(input);
+        
+		String content = Helper.readerToString(input);
         
 		String segResult = content;
 
@@ -77,4 +79,27 @@ public class MyTokenizer extends Tokenizer{
 		return false;
 	}
 
+    public void reset() throws IOException{
+        super.reset();
+		String content = Helper.readerToString(input);
+        
+		String segResult = content;
+
+        ThulacJni thulac = new ThulacJni();
+        boolean isInit = thulac.init("/home/dreamszl/thulacjni/models");
+        if(!isInit){
+            System.out.println("Init Failed");
+        }else{
+            segResult = thulac.segment(content);
+        }
+        
+		terms = thulacSeg(segResult);
+		currentTerm = 0;
+		length = terms.size();
+    }
+
+    public void end(){
+        int finalOffset = correctOffset(length);
+        offsetAtt.setOffset(finalOffset, finalOffset);
+    }
 }
