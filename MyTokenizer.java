@@ -49,12 +49,12 @@ public class MyTokenizer extends Tokenizer{
         
 		String segResult = content;
 
-        ThulacJni thulac = null;
+        ThulacJni thulac = new ThulacJni();
         boolean isInit = thulac.init("/home/dreamszl/thulacjni/models");
         if(!isInit){
             System.out.println("Init Failed");
         }else{
-            segReslt = thulac.segment(content);
+            segResult = thulac.segment(content);
         }
         
 		terms = thulacSeg(segResult);
