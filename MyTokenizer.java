@@ -19,6 +19,7 @@ public class MyTokenizer extends Tokenizer{
 	private int currentTerm;
 	private int length;
     private int in;
+    private String content;
 
 	private static ArrayList<Term> thulacSeg(String content){
 		ArrayList<Term> resultList = new ArrayList<Term>();
@@ -47,7 +48,7 @@ public class MyTokenizer extends Tokenizer{
 		typeAtt = addAttribute(TypeAttribute.class);
 		termAtt = addAttribute(CharTermAttribute.class);
         
-		String content = Helper.readerToString(input);
+		content = Helper.readerToString(input);
         
 		String segResult = content;
 
@@ -81,8 +82,11 @@ public class MyTokenizer extends Tokenizer{
 
     public void reset() throws IOException{
         super.reset();
-		String content = Helper.readerToString(input);
-        
+
+        String tmp = Helper.readerToString(input);
+        if(!tmp.equals("")){
+            content = tmp;
+        }
 		String segResult = content;
 
         ThulacJni thulac = new ThulacJni();

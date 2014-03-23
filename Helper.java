@@ -21,11 +21,6 @@ public class Helper {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        try{
-            reader.reset();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
 
 		return b.toString();
 	}
