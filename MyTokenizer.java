@@ -9,6 +9,8 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 
+import util.segment.ThulacJni;
+
 public class MyTokenizer extends Tokenizer{
 	private final CharTermAttribute termAtt;
 	private final OffsetAttribute offsetAtt;
@@ -44,8 +46,17 @@ public class MyTokenizer extends Tokenizer{
 		typeAtt = addAttribute(TypeAttribute.class);
 		termAtt = addAttribute(CharTermAttribute.class);
 		content = Helper.readerToString(input);
-		
+        
 		String segResult = content;
+
+        ThulacJni thulac = null;
+        boolean isInit = thulac.init("/home/dreamszl/thulacjni/models");
+        if(!isInit){
+            System.out.println("Init Failed");
+        }else{
+            segReslt = thulac.segment(content);
+        }
+        
 		terms = thulacSeg(segResult);
 		currentTerm = 0;
 		length = terms.size();
