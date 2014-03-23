@@ -14,9 +14,7 @@ import org.apache.lucene.util.Version;
 
 public class TokenizerTest {
 	public static void main(String[] args) throws IOException{
-		String string = "清华大学计算机系";
-		Reader test = new StringReader(string);
-		System.out.println(Helper.readerToString(test));
+		String string = "今天_t 很_d 荣幸_a 参加_v 肖_np 老师_n 组织_v 的_u";
 		Analyzer analyzer = new MyAnalyzer();
 		TokenStream ts;
 		try {
