@@ -16,7 +16,7 @@ public class TokenizerTest {
 	public static void main(String[] args) throws IOException{
 		Analyzer analyzer = new MyAnalyzer();
 		String string = "今天很荣幸参加肖老师组织的数据结构课程";
-        String string2 = "我希望能和张蕾永远在一起。";
+        String string2 = "这是一段测试文字。";
 		TokenStream ts;
 		try {
 			ts = analyzer.tokenStream("dummy", new StringReader(string));
